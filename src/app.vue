@@ -1,33 +1,45 @@
 <template>
   <div class="container">
-<input
-  @input='handleInput'
-  @compositionstart='handleComposition'
-  @compositionend='handleComposition'
-/>
+    <Select v-model="model1" style="width: 200px">
+      <Option v-for="item in cityList" :value="item.value" :key="item.value">{{item.label}}</Option>
+    </Select>
+    {{model1}}
   </div>
 </template>
+
 <script>
 export default {
-data() {
-  return {
-    isOnComposition: false
-  };
-},
-methods: {
-  handleComposition(e) {
-    if(e.type === 'compositionstart') {
-      this.isOnComposition = true;
-    }
-    if(e.type === 'compositionend') {
-      this.isOnComposition = false;
-      this.handleInput();
-    }
-  },
-  handleInput() {
-    if(this.isOnComposition) return;
+  data() {
+    return {
+      cityList: [
+        {
+          value: "New York",
+          label: "New York"
+        },
+        {
+          value: "London",
+          label: "London"
+        },
+        {
+          value: "Sydney",
+          label: "Sydney"
+        },
+        {
+          value: "Ottawa",
+          label: "Ottawa"
+        },
+        {
+          value: "Paris",
+          label: "Paris"
+        },
+        {
+          value: "Canberra",
+          label: "Canberra"
+        }
+      ],
+      model1: ""
+    };
   }
-}
 };
 </script>
 
