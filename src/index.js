@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import App from './app';
-// import iView from 'iview';
-// import 'iview/dist/styles/iview.css';
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
 import './styles/index.scss';
 
-// Vue.use(iView);
+Vue.use(iView);
 
 new Vue({
   render(h) {

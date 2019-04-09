@@ -47,22 +47,20 @@ const baseConfig = {
           loaders: {
             css: [
               "vue-style-loader",
-              {
-                loader: "css-loader"
-              }
+              "css-loader",
+              "postcss-loader"
             ],
             scss: [
               "vue-style-loader",
               {
                 loader: "css-loader",
+                options: {
+                  importLoaders: 2
+                }
               },
-              {
-                loader: "sass-loader",
-              }
+              "sass-loader",
+              "postcss-loader"
             ]
-          },
-          postLoaders: {
-            html: "babel-loader?sourceMap"
           }
         }
       },

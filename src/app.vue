@@ -1,11 +1,12 @@
 <template>
   <div class="container">
-    <cInput />
+    <cInput/>
+    <Input/>
   </div>
 </template>
 
 <script>
-import cInput from '@/components/input';
+import cInput from "@/components/input";
 
 export default {
   data() {
@@ -18,7 +19,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  padding: 10px;
-}
 </style>

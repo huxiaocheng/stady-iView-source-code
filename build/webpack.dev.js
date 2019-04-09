@@ -24,32 +24,23 @@ const devConfig = {
       {
         test: /\.css$/,
         loaders: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: '\'autoprefixer-loader\'',
-          }
+          "style-loader",
+          "css-loader",
+          "postcss-loader"
         ]
       },
       {
         test: /\.scss$/,
         loaders: [
-          {
-            loader: "style-loader"
-          },
+          "style-loader",
           {
             loader: "css-loader",
             options: {
-              importLoaders: 1
+              importLoaders: 2
             }
           },
-          {
-            loader: "sass-loader"
-          }
+          "sass-loader",
+          "postcss-loader"
         ]
       }
     ]
