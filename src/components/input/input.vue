@@ -1,38 +1,7 @@
 <template>
   <div :class="wrapClasses">
-    <div :class="[prefixCls + '-group-prepend']" v-if="prepend" v-show="slotReady">
-      <!-- 前置内容 -->
-      <slot name="prepend"/>
-    </div>
-    <i
-      class="c-ui-icon"
-      :class="[
-        'c-ui-icon-close-circle', 
-        prefixCls + '-icon', 
-        prefixCls + '-icon-clean', 
-        prefixCls + '-icon-normal'
-      ]"
-      v-if="clearable && currentValue && !disabled"
-      @click="handleClear"
-    ></i>
-    <!-- 清空输入框 -->
-    <i
-      class="c-ui-icon c-ui-icon-search"
-      :class="[
-        prefixCls + '-icon', 
-        prefixCls + '-icon-normal', 
-        prefixCls + '-search-icon'
-      ]"
-      v-else-if="search && enterButton === false"
-      @click="handleSearch"
-    ></i>
-    <!-- 搜索模式输入框 -->
-    <span class="c-ui-input-suffix" v-else-if="showSuffix">
-      <slot name="suffix">
-        <i class="c-ui-icon" :class="["c-ui-icon" - suffix]" v-if="suffix"></i>
-      </slot>
-    </span>
     <input
+      :class="inputClasses"
       :autocomplete="autocomplete"
       ref="input"
       :type="type"
@@ -58,12 +27,13 @@
 <script>
 import { findComponentUpward } from "@/utils/assist";
 import Emitter from "@/mixins/emitter";
+import AutoFocus from '@/mixins/autoFocus';
 
 const prefixCls = "c-ui-input";
 
 export default {
   name: "Input",
-  mixins: [Emitter],
+  mixins: [Emitter, AutoFocus],
   props: {
     type: {
       // 类型
@@ -79,12 +49,6 @@ export default {
         ].includes(val);
       },
       default: "text"
-    },
-    size: {
-      validator(val) {
-        return ["small", "large", "default"].includes(val);
-      },
-      default: "default"
     },
     value: [String, Number], //绑定的值
     placeholder: {
@@ -102,26 +66,9 @@ export default {
       type: Boolean,
       default: false
     },
-    clearable: {
-      // 是否显示清空按钮
-      type: Boolean,
-      default: false
-    },
     readonly: {
       // 是否只读
       type: Boolean,
-      default: false
-    },
-    prefix: String, // 输入框前icon,
-    suffix: String, // 输入框后icon,
-    search: {
-      //是否显示为搜索型输入框
-      type: Boolean,
-      default: false
-    },
-    enterButton: {
-      // 为search后，是否有确认按钮，可设为按钮文字
-      type: [Boolean, String],
       default: false
     },
     autofocus: {
@@ -141,32 +88,26 @@ export default {
     return {
       slotReady: false,
       currentValue: this.value,
-      isOnComposition: false,
-      prepend: false,
-      showSuffix: false,
-      prefixCls
+      isOnComposition: false
     };
   },
   mounted() {
     this.slotReady = true;
+    if(this.autofocus) {
+      this.autoFocus('input');
+    }
   },
   computed: {
     wrapClasses() {
-      return [
-        `${prefixCls}`,
-        {
-          [`${prefixCls}-wrapper-${this.size}`]: !!this.size,
-          [`${prefixCls}-type`]: this.type
-        }
-      ];
+      return [`${prefixCls}-wrapper`];
+    },
+    inputClasses() {
+      return [`${prefixCls}`];
     }
   },
   methods: {
     handleEnter(e) {
       this.$emit("on-enter", e);
-      if (this.search) {
-        this.$emit("on-search", this.currentValue);
-      }
     },
     handleKeyup(e) {
       this.$emit("on-keyup", e);
@@ -200,9 +141,8 @@ export default {
       }
     },
     handleInput(e) {
-      if (this.isOnComposition) {
-        return;
-      }
+      if (this.isOnComposition) { return; }
+
       let value = e.target.value;
       if (this.number && value !== "") {
         value = Number.isNan(Number(value)) ? value : Number(value);
@@ -215,9 +155,7 @@ export default {
       this.$emit("on-input-change", e);
     },
     setCurrentValue(val) {
-      if (val === this.currentValue) {
-        return;
-      }
+      if (val === this.currentValue) { return; }
       this.currentValue = val;
       if (
         !findComponentUpward(this, [
@@ -230,19 +168,6 @@ export default {
         this.dispatch("FormItem", "on-form-change", val);
       }
     },
-    handleClear() {
-      const e = { target: { value: "" } };
-      this.$emit("input", "");
-      this.setCurrentValue("");
-      this.$emit("on-change", e);
-    },
-    handleSearch() {
-      if (this.disabled) {
-        return;
-      }
-      this.$refs.input.focus();
-      this.$emit("on-search", this.currentValue);
-    }
   },
   watch: {
     value(newVal) {
@@ -253,25 +178,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/mixins/input.scss";
-.c-ui-input {
+@import "../../styles/index";
+
+.c-ui-input-wrapper {
   display: inline-block;
   width: 100%;
-  height: 32px;
-  line-height: 1.5;
-  padding: 4px 7px;
-  font-size: 12px;
-  border: 1px solid #dcdee2;
-  border-radius: 4px;
-  color: #515a6e;
-  background-color: #fff;
-  background-image: none;
   position: relative;
-  cursor: text;
-  transition: border 0.2s ease-in-out, background 0.2s ease-in-out,
-  box-shadow 0.2s ease-in-out;
-  &:hover {
-    @include hover()
+  vertical-align: middle;
+  line-height: normal;
+  border-radius: $btn-border-radius;
+  overflow: hidden;
+  .c-ui-input {
+    @include input();
+    @include placeholder();
+    &:hover {
+      @include hover();
+    }
+    &:focus {
+      @include active();
+    }
+    &:disabled {
+      @include disabled();
+    }
   }
 }
 </style>

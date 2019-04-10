@@ -7,7 +7,7 @@
 }
 
 @mixin active($color: $input-hover-border-color) {
-  border-color: tint($color, 20%);
+  border-color: lighten($color, 10%);
 }
 
 @mixin active-error() {
@@ -38,16 +38,14 @@
   }
 }
 
-@mixin input-large() {
-  font-size: $font-size-base;
-  padding: $input-padding-vertical-large $input-padding-horizontal;
-  height: $input-height-large;
-}
-
-@mixin input-small() {
-  padding: $input-padding-vertical-small $input-padding-horizontal;
-  height: $input-height-small;
-  border-radius: $btn-border-radius-small;
+@mixin input-error() {
+  border: 1px solid $error-color;
+  &:hover {
+    @include hover-error();
+  }
+  &:active {
+    @include active-error();
+  }
 }
 
 @mixin input() {
