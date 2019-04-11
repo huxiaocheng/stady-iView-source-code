@@ -1,6 +1,6 @@
 <template>
-  <li :class="classes" @click.stop="select" @mousedown.prevent>
-    <slot>{{showLabel}}</slot>
+  <li :class="classes" @click.stop="select">
+    <slot>{{value}}</slot>
   </li>
 </template>
 
@@ -18,9 +18,6 @@ export default {
       type: [String, Number],
       required: true
     },
-    label: {
-      type: [String, Number]
-    },
     disabled: {
       type: Boolean,
       default: false
@@ -34,7 +31,6 @@ export default {
   },
   data() {
     return {
-      searchLabel: "",
       autoComplete: false
     };
   },
@@ -47,23 +43,14 @@ export default {
           [`${prefixCls}-selected`]: this.selected && !this.autoComplete
         }
       ];
-    },
-    showLabel() {
-      return this.label || this.value;
     }
   },
   methods: {
     select() {
       if (this.disabled) return;
 
-      this.dispatch("Select", "on-select-selected", {
-        value: this.value,
-        label: this.label
-      });
-      this.$emit("on-select-selected", {
-        value: this.value,
-        label: this.label
-      });
+      this.dispatch("Select", "on-select-selected", this.value);
+      this.$emit("on-select-selected", this.value);
     }
   }
 };
@@ -80,7 +67,7 @@ export default {
   white-space: nowrap;
   list-style: none;
   cursor: pointer;
-  transition: background .2s ease-in-out;
+  transition: background 0.2s ease-in-out;
   &:hover {
     background: #eee;
   }

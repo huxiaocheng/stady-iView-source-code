@@ -26,15 +26,16 @@
       <cCheckbox label="checkbox3"></cCheckbox>
     </cCheckboxGroup>
     <cCheckbox v-model="checkboxValue" label="asd"></cCheckbox>
-    <cSwitch v-model="switchVal" @on-change="switchChange">
+    <cSwitch v-model="switchVal">
       <span slot="open">开</span>
       <span slot="close">关</span>
     </cSwitch>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <Select v-model="model1" style="width:200px" placement='bottom-end'>
-      <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      <Option v-for="item in cityList" :value="item.value" :key="item.value"/>
     </Select>
-    <cOption :value='optionValue'/>
+    {{model1}}
+    <cOption v-for='item in cityList' :value='item.value' :key='item.value' @on-select-selected='handleSelectItem'/>
   </div>
 </template>
 
@@ -89,7 +90,7 @@ export default {
     };
   },
   methods: {
-    switchChange(value) {
+    handleSelectItem(value) {
       console.log(value);
     }
   },
