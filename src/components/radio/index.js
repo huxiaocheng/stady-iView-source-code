@@ -1,3 +1,3 @@
-import Radio from './radio';
+import cRadio from './radio';
 
-export default Radio;
+export default cRadio;

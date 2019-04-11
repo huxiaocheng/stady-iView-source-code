@@ -25,11 +25,16 @@
       <cCheckbox label="checkbox2"></cCheckbox>
       <cCheckbox label="checkbox3"></cCheckbox>
     </cCheckboxGroup>
-    <cCheckbox v-model="checkboxValue" label='asd'></cCheckbox>
-    <br>
-    {{checkboxValues.length > 0 ? checkboxValues : ''}}
-    <br>
-    {{checkboxValue}}
+    <cCheckbox v-model="checkboxValue" label="asd"></cCheckbox>
+    <cSwitch v-model="switchVal" @on-change="switchChange">
+      <span slot="open">开</span>
+      <span slot="close">关</span>
+    </cSwitch>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <Select v-model="model1" style="width:200px" placement='bottom-end'>
+      <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>
+    <cOption :value='optionValue'/>
   </div>
 </template>
 
@@ -39,21 +44,53 @@ import cRadio from "@/components/radio";
 import cRadioGroup from "@/components/radio-group";
 import cCheckbox from "@/components/checkbox";
 import cCheckboxGroup from "@/components/checkbox-group";
+import cSwitch from "@/components/switch";
+import cOption from '@/components/option';
 
 export default {
   data() {
     return {
+      optionValue: 'hello',
+      cityList: [
+        {
+          value: "New York",
+          label: "New York"
+        },
+        {
+          value: "London",
+          label: "London"
+        },
+        {
+          value: "Sydney",
+          label: "Sydney"
+        },
+        {
+          value: "Ottawa",
+          label: "Ottawa"
+        },
+        {
+          value: "Paris",
+          label: "Paris"
+        },
+        {
+          value: "Canberra",
+          label: "Canberra"
+        }
+      ],
+      model1: "",
+      switchVal: false,
       checkboxValue: true,
       checkboxValues: ["checkbox2"],
       msg: "hello1",
       radioVal: false,
       radioGroupVal: 1,
-      animal: "金斑蝶"
+      animal: "金斑蝶",
+      switch1: false
     };
   },
   methods: {
-    handleClick() {
-      this.msg = "world";
+    switchChange(value) {
+      console.log(value);
     }
   },
   components: {
@@ -61,7 +98,9 @@ export default {
     cRadio,
     cRadioGroup,
     cCheckbox,
-    cCheckboxGroup
+    cCheckboxGroup,
+    cSwitch,
+    cOption
   }
 };
 </script>

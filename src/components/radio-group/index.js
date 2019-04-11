@@ -1,3 +1,3 @@
-import RadioGroup from '@/components/radio/radio-group';
+import cRadioGroup from '@/components/radio/radio-group';
 
-export default RadioGroup;
+export default cRadioGroup;
