@@ -23,24 +23,13 @@ export default {
       default: false
     }
   },
-  mounted() {
-    const Select = findComponentUpward(this, "Select");
-    if (Select) {
-      this.autoComplete = Select.autoComplete;
-    }
-  },
-  data() {
-    return {
-      autoComplete: false
-    };
-  },
   computed: {
     classes() {
       return [
         `${prefixCls}`,
         {
           [`${prefixCls}-disabled`]: this.disabled,
-          [`${prefixCls}-selected`]: this.selected && !this.autoComplete
+          [`${prefixCls}-selected`]: this.selected
         }
       ];
     }

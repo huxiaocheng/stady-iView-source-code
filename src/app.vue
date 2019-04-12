@@ -31,11 +31,13 @@
       <span slot="close">关</span>
     </cSwitch>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <Select v-model="model1" style="width:200px" placement='bottom-end'>
-      <Option v-for="item in cityList" :value="item.value" :key="item.value"/>
-    </Select>
-    {{model1}}
-    <cOption v-for='item in cityList' :value='item.value' :key='item.value' @on-select-selected='handleSelectItem'/>
+    <cSelect v-model='model1' style="width:300px" placement='top-start'>
+      <cOption 
+        v-for='item in cityList' 
+        :value='item.value' 
+        :key='item.value' 
+        @on-select-selected='handleSelectItem'/>
+    </cSelect>
   </div>
 </template>
 
@@ -47,6 +49,7 @@ import cCheckbox from "@/components/checkbox";
 import cCheckboxGroup from "@/components/checkbox-group";
 import cSwitch from "@/components/switch";
 import cOption from '@/components/option';
+import cSelect from '@/components/select';
 
 export default {
   data() {
@@ -101,6 +104,7 @@ export default {
     cCheckbox,
     cCheckboxGroup,
     cSwitch,
+    cSelect,
     cOption
   }
 };
