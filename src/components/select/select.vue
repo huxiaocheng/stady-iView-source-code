@@ -1,6 +1,11 @@
 <template>
   <div :class="classes" v-click-outside.capture="onClickOutside">
-    <div ref="reference" :class="selectionCls" @click="toggleMenu" @mouseleave="handleMouseLeave" @mouseenter='handleMouseEnter'>
+    <div ref="reference" 
+      :class="selectionCls" 
+      @click="toggleMenu" 
+      @mouseleave="handleMouseLeave" 
+      @mouseenter='handleMouseEnter'
+    >
       <input type="hidden" :name="name" :value="currentValue">
       <span :class="tagTextCls">{{currentValue || '请选择'}}</span>
       <i :class='clearValue' @click.stop='handleClear' ref='icon'>x</i>

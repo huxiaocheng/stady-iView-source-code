@@ -31,13 +31,15 @@
       <span slot="close">关</span>
     </cSwitch>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <cIcon type="ios-checkmark" size='30' color='red'/>
     <cSelect v-model='model1' style="width:300px" placement='top-start'>
-      <cOption 
-        v-for='item in cityList' 
-        :value='item.value' 
-        :key='item.value' 
+      <cOption
+        v-for='item in cityList'
+        :value='item.value'
+        :key='item.value'
         @on-select-selected='handleSelectItem'/>
     </cSelect>
+  <cButton>hello</cButton>
   </div>
 </template>
 
@@ -50,6 +52,8 @@ import cCheckboxGroup from "@/components/checkbox-group";
 import cSwitch from "@/components/switch";
 import cOption from '@/components/option';
 import cSelect from '@/components/select';
+import cIcon from '@/components/icon';
+import cButton from '@/components/button';
 
 export default {
   data() {
@@ -105,7 +109,9 @@ export default {
     cCheckboxGroup,
     cSwitch,
     cSelect,
-    cOption
+    cOption,
+    cIcon,
+    cButton
   }
 };
 </script>
