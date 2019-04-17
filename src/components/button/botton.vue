@@ -6,7 +6,7 @@
     @click='handleClickLink'
     v-bind='tagProps'
   >
-    <Icon :type='icon' v-if='icon'/>
+    <cIcon :type='icon' v-if='icon'/>
     <span v-if='showSlot'>
       <slot/>
     </span>
@@ -15,7 +15,7 @@
 
 <script>
 import UrlLink from '@/mixins/link';
-import Icon from '@/components/icon';
+import cIcon from '@/components/icon';
 
 const prefixCls = 'c-ui-btn';
 
@@ -103,6 +103,9 @@ export default {
 
       this.handleCheckClick(e, openInNewWindow);
     }
+  },
+  components: {
+    cIcon
   }
 }
 </script>
@@ -113,6 +116,7 @@ export default {
     margin-bottom: 0;
     font-weight: 400;
     text-align: center;
+    vertical-align: middle;
     -ms-touch-action: manipulation;
     touch-action: manipulation;
     cursor: pointer;
@@ -121,9 +125,7 @@ export default {
     border: 1px solid transparent;
     white-space: nowrap;
     user-select: none;
-    padding: 0 15px 2px 15px;
-    height: 30px;
-    line-height: 30px;
+    padding: 5px 15px 6px 15px;
     font-size: 12px;
     border-radius: 4px;
     transition: 
